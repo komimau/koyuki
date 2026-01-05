@@ -1,0 +1,22 @@
+{
+  "name": "bun-discord.js",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "run": "bun run src/index",
+    "register": "bun run barrel && bun run src/scripts/register",
+    "barrel": "bun run src/scripts/barrel"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prettier": "^3.7.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "discord.js": "^14.25.1",
+    "mongodb": "^7.0.0"
+  }
+}
