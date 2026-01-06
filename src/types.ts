@@ -4,6 +4,7 @@ import type {
   MessageCreateOptions,
   MessageEditOptions,
   SlashCommandBuilder,
+  SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder,
 } from 'discord.js'
 
@@ -26,7 +27,7 @@ type UniversalMessageOptions = Partial<
 >
 
 export type BotCommand = {
-  builder: SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder
+  builder: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder
   run: (interaction: ChatInputCommandInteraction) => Promise<void>
 }
 

@@ -1,8 +1,8 @@
 import { Bot } from '../classes'
-import { type ChatInputCommandInteraction, type CacheType } from 'discord.js'
+import { type ChatInputCommandInteraction, type CacheType, Events } from 'discord.js'
 
 export default async () => {
-  Bot.client.on('interactionCreate', async (interaction) => {
+  Bot.client.on(Events.InteractionCreate, async (interaction) => {
     if (interaction.isChatInputCommand()) await handleChatInputCommand(interaction)
   })
 }

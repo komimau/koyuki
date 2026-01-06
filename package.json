@@ -16,6 +16,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1",
     "discord.js": "^14.25.1",
     "mongodb": "^7.0.0"
   }

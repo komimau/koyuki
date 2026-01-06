@@ -3,23 +3,24 @@ import { Environment } from '../classes'
 import type { BotCommand, BotEvent } from '../types'
 import * as commands from '../commands'
 import * as events from '../events'
+import Status from './Statuses'
 
 const client: Client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
-    // GatewayIntentBits.GuildInvites,
-    // GatewayIntentBits.GuildMembers,
-    // GatewayIntentBits.GuildMessages,
-    // GatewayIntentBits.GuildWebhooks,
+    GatewayIntentBits.GuildInvites,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildWebhooks,
     // GatewayIntentBits.GuildPresences,
-    // GatewayIntentBits.GuildExpressions,
-    // GatewayIntentBits.GuildVoiceStates,
-    // GatewayIntentBits.GuildMessagePolls,
-    // GatewayIntentBits.GuildMessageTyping,
-    // GatewayIntentBits.GuildMessageReactions,
-    // GatewayIntentBits.GuildScheduledEvents,
-    // GatewayIntentBits.GuildModeration,
-    // GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildExpressions,
+    GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildMessagePolls,
+    GatewayIntentBits.GuildMessageTyping,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.GuildScheduledEvents,
+    GatewayIntentBits.GuildModeration,
+    GatewayIntentBits.MessageContent,
   ],
 })
 
@@ -54,5 +55,11 @@ export default class Bot {
     for (const addEvent of Bot.events) {
       await addEvent()
     }
+
+    Status.cycle()
+  }
+
+  public static get color() {
+    return 0xfdc7de
   }
 }

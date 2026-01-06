@@ -1,2 +1,5 @@
 export { default as clientReady } from './events/clientReady.ts'
+export { default as guildMemberAdd } from './events/guildMemberAdd.ts'
+export { default as guildMemberUpdate } from './events/guildMemberUpdate.ts'
 export { default as interactionCreate } from './events/interactionCreate.ts'
+export { default as messageCreate } from './events/messageCreate.ts'
