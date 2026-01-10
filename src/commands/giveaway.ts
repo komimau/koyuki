@@ -42,6 +42,15 @@ export default {
     .addBooleanOption((option) =>
       option.setName('include_bots').setDescription('include bots').setRequired(false)
     )
+    .addStringOption((option) =>
+      option.setName('title').setDescription('the title of the giveaway').setRequired(false)
+    )
+    .addStringOption((option) =>
+      option
+        .setName('blacklist')
+        .setDescription('comma-separated user IDs to exclude from the giveaway')
+        .setRequired(false)
+    )
     .addUserOption((option) =>
       option.setName('host').setDescription('the giveaway host').setRequired(false)
     )
@@ -84,6 +93,9 @@ export default {
     const includeSelf = interaction.options.getBoolean('include_self') ?? false
     const includeBots = interaction.options.getBoolean('include_bots') ?? false
     const host = interaction.options.getUser('host') ?? interaction.user
+    const title = interaction.options.getString('title') ?? 'Giveaway Winners'
+    const blacklist =
+      interaction.options.getString('blacklist')?.replaceAll(/\s/g, '').split(',') ?? []
 
     const prize1 = interaction.options.getString('prize_1') ?? 'Prize'
     const prize2 = interaction.options.getString('prize_2') ?? prize1
@@ -146,20 +158,16 @@ export default {
     if (!includeSelf) users = users.filter((user) => user.id !== interaction.user.id)
     if (!includeBots) users = users.filter((user) => !user.bot)
 
-    const winnerIndexes = Util.randomIntegers(
-      0,
-      users.length - 1,
-      Math.min(winnerCount, users.length),
-      true
-    )
+    users = users.filter((user) => !blacklist.includes(user.id))
 
-    const winnersChosen = users.filter((user, index) => winnerIndexes.includes(index))
-    const winnersShuffled = Util.shuffleArray(winnersChosen).slice(0, 10)
+    const total = users.length
+
+    users = Util.shuffleArray(users).slice(0, winnerCount)
 
     const winners: { id: string; prize: string }[] = []
-    for (let i = 0; i < winnersShuffled.length; i++) {
+    for (let i = 0; i < users.length; i++) {
       winners.push({
-        id: winnersShuffled[i]!.id,
+        id: users[i]!.id,
         prize: prizes[i]!,
       })
     }
@@ -179,12 +187,12 @@ export default {
       currentIndex += 1
     }
 
-    text += `\n-# Selected ${winners.length} winner${winners.length === 1 ? '' : 's'} out of ${users.length} total, thanks for participating!`
+    text += `\n-# Selected ${winners.length} winner${winners.length === 1 ? '' : 's'} out of ${total} total, thanks for participating!`
     text += `\n-# Please message <@${host.id}> within 48 hours to claim your prize.`
 
     const targetMessage = await targetTextChannel.send({
       components: [
-        new TextDisplayBuilder().setContent(`## Giveaway Winners`),
+        new TextDisplayBuilder().setContent(`## ${title}`),
         new ContainerBuilder().addTextDisplayComponents(new TextDisplayBuilder().setContent(text)),
       ],
       flags: MessageFlags.IsComponentsV2,
