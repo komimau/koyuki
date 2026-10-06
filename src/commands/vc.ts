@@ -19,12 +19,6 @@ export default {
       return
     }
 
-    const voiceChannel = member.voice.channel
-    if (!voiceChannel) {
-      interaction.reply('You must be in a voice channel!')
-      return
-    }
-
     const guild = await Bot.client.guilds.fetch(Environment.DISCORD_GUILD_ID)
 
     joinVoiceChannel({
