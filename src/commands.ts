@@ -1,4 +1,5 @@
 export { default as burnice } from './commands/burnice.ts'
+export { default as define } from './commands/define.ts'
 export { default as giveaway } from './commands/giveaway.ts'
 export { default as groupchat } from './commands/groupchat.ts'
 export { default as haidomo } from './commands/haidomo.ts'
